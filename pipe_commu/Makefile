@@ -1,11 +1,8 @@
-CC = gcc 
+CC=gcc 
 
-CFLAGS = 
+CFLAGS= -v
 
-VPATH = src
-SRC = pipe_commu.c child.c
-
-.SUFFIXES: .c .o
+VPATH=src
 
 all:pipe_commu.o child.o
 
