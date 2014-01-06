@@ -8,7 +8,7 @@ void ouch(int sig){
     // SIG_DFL で default のハンドラに戻す。
 }
 
-int   main(){
+int main(){
     (void) signal(SIGINT, ouch);
     // SIGINT のハンドラを ouch() に設定
     while(1) {
