@@ -4,6 +4,15 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
+
+static int signal_catched=0;
+
+void sigcatch(int sig){
+  signal_catched=1;
+  /* シグナルハンドラをデフォルトに戻す */
+  /*signal(sig,SIG_DFL);*/
+}
 
 int main(int argc,char *argv[]){
   int pipes[2];
@@ -29,7 +38,12 @@ int main(int argc,char *argv[]){
   printf("%d\tsended boot_msg\n",getpid());
 
   /* Delay */
-  sleep(1);
+  (void) signal(SIGINT, sigcatch);
+
+  pause();  // シグナルを受け取るまで中止する
+  if(signal_catched){
+    printf("%d\tgot signal\n", getpid());
+  }
 
   /* パイプを介して親からメッセージを受け取る */
   printf("%d\tchild read\n",getpid());

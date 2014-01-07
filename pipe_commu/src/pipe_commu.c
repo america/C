@@ -4,12 +4,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <signal.h>
 
 
 /* 親用 */
 void parent(int pipes[2]);
 /* 子用 */
 void child(int pipes[2]);
+
+static int alarm_fired=0;
 
 int main(void)
 {
@@ -55,6 +58,7 @@ void parent(int pipes[2]){
 
   /* 子のexec完了を確認 */
   printf("%d\tchecking child boot\n",getpid());
+
   memset(buffer,'\0',sizeof(buffer));
   errno = 0;
   readed = read(pipes[0],buffer,BUFSIZ);
@@ -72,6 +76,9 @@ void parent(int pipes[2]){
   if(writed <= 0){
     perror("write failed");
   }
+
+  /* 子にシグナルを送る */
+  kill(0, SIGINT);
 
   /* 子が死ぬのを待つ */
   wait();
