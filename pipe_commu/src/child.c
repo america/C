@@ -15,6 +15,8 @@ void sigcatch(int sig){
 }
 
 int main(int argc,char *argv[]){
+  struct sigaction act;
+
   int pipes[2];
   int readed;
   char read_buf[BUFSIZ + 1];
@@ -38,9 +40,14 @@ int main(int argc,char *argv[]){
   printf("%d\tsended boot_msg\n",getpid());
 
   /* Delay */
-  (void) signal(SIGINT, sigcatch);
+  act.sa_handler=sigcatch;
+  sigemptyset(&act.sa_mask);
+  act.sa_flags=0;
+
+  sigaction(SIGINT, &act, 0);
 
   pause();  // シグナルを受け取るまで中止する
+
   if(signal_catched){
     printf("%d\tgot signal\n", getpid());
   }
