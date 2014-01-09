@@ -1,1 +1,4 @@
-#Repository for UNIX-C
+Repository for UNIX-C
+=====================
+
+study c programming
