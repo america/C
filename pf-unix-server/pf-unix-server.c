@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <errno.h>
+#include <ctype.h>
 #include "pf-unix-server.h"
  
 /* サーバ処理 */
