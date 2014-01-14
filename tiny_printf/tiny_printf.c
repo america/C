@@ -1,5 +1,6 @@
 #include <stdio.h>  /* putchar */
 #include <stdarg.h> /* va_list, va_start, va_arg, va_end */
+#include <stdlib.h>
 
 int tiny_printf(const char *fmt, ...)
 {
@@ -21,8 +22,19 @@ int tiny_printf(const char *fmt, ...)
 
 int main(void)
 {
-  tiny_printf("hello: \n");
-  tiny_printf("hello: %d\n", 1);
-  tiny_printf("hello: %d %d\n", 1 ,2);
+  if((tiny_printf("hello: \n")) == -1){
+    perror("tiny_printf");
+    exit(EXIT_FAILURE); 
+  }
+  if((tiny_printf("hello: %d\n", 1)) == -1){
+    perror("tiny_printf");
+    exit(EXIT_FAILURE); 
+  }
+  if((tiny_printf("hello: %d %d\n", 1 ,2)) == -1){
+    perror("tiny_printf");
+    exit(EXIT_FAILURE); 
+  }
+  exit(EXIT_SUCCESS);
+
 }
 
