@@ -20,7 +20,6 @@ char **add_line(char **text_data, char *line,
   return text_data;
 }
 
-
 char **read_file(FILE *fp, int *line_num_p)
 {
   char **text_data = NULL;
